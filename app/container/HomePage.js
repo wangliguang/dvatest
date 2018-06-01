@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Platform,
   StyleSheet,
@@ -6,27 +7,18 @@ import {
   View
 } from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import * as reducerType from '../model'
 
 type Props = {};
 class HomePage extends Component<Props> {
+
+  componentDidMount() {
+    this.props.setUserInfo(reducerType.USER_SAVEUSER, { name: '王立广', age: 26 });
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
       </View>
     );
   }
@@ -37,18 +29,26 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+    backgroundColor: 'orange',
   },
 });
 
-export default HomePage;
+const mapStateToProps = (state) => {
+  const { loading, User } = state;
+  console.log(state);
+  return {
+    loading,
+    User,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  setUserInfo: (type, payload) => {
+    dispatch({
+      type,
+      payload,
+    });
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

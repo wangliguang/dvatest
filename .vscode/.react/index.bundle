@@ -61533,12 +61533,16 @@ __d(function (global, _require, module, exports, _dependencyMap) {
   var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
   exports.default = function () {
-    var app = (0, _dvaCore.create)({
-      onError: function onError(error) {
-        alert(error);
+    var app = (0, _dvaCore.create)(_extends({}, (0, _dvaLoading2.default)({
+      effects: true
+    }), {
+      onReducer: function onReducer(reducer) {
+        return function (state, action) {
+          return _extends({}, action.payload);
+        };
       }
-    });
-    app.model(UserModel);
+    }));
+    (0, _model2.default)(app);
     app.start();
     var store = app._store;
     return _react2.default.createElement(
@@ -61547,13 +61551,13 @@ __d(function (global, _require, module, exports, _dependencyMap) {
         store: store,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 29
+          lineNumber: 36
         }
       },
       _react2.default.createElement(_HomePage2.default, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 30
+          lineNumber: 37
         }
       })
     );
@@ -61571,19 +61575,16 @@ __d(function (global, _require, module, exports, _dependencyMap) {
 
   var _reactRedux = _require(_dependencyMap[3], "react-redux");
 
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  var _dvaLoading = _require(_dependencyMap[4], "dva-loading");
 
-  var UserModel = {
-    namespace: 'User',
-    state: {},
-    reducers: {
-      saveUser: function saveUser(state, _ref) {
-        var payload = _ref.payload;
-        return _extends({}, state, payload);
-      }
-    }
-  };
-},493,[494,118,495,667],"app/index.js");
+  var _dvaLoading2 = _interopRequireDefault(_dvaLoading);
+
+  var _model = _require(_dependencyMap[5], "./model");
+
+  var _model2 = _interopRequireDefault(_model);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+},493,[494,118,495,667,685,686],"app/index.js");
 __d(function (global, _require, module, exports, _dependencyMap) {
   module.exports = _require(_dependencyMap[0], './lib');
 },495,[496],"node_modules/dva-core/index.js");
@@ -69666,7 +69667,15 @@ __d(function (global, _require, module, exports, _dependencyMap) {
 
   var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-  var _reactNative = _require(_dependencyMap[2], "react-native");
+  var _reactRedux = _require(_dependencyMap[2], "react-redux");
+
+  var _reactNative = _require(_dependencyMap[3], "react-native");
+
+  var _model = _require(_dependencyMap[4], "../model");
+
+  var reducerType = _interopRequireWildcard(_model);
+
+  function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -69695,11 +69704,6 @@ __d(function (global, _require, module, exports, _dependencyMap) {
     };
   }
 
-  var instructions = _reactNative.Platform.select({
-    ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-    android: 'Double tap R on your keyboard to reload,\n' + 'Shake or press menu button for dev menu'
-  });
-
   var HomePage = _wrapComponent("HomePage")(function (_Component) {
     _inherits(HomePage, _Component);
 
@@ -69710,51 +69714,23 @@ __d(function (global, _require, module, exports, _dependencyMap) {
     }
 
     _createClass(HomePage, [{
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        this.props.setUserInfo(reducerType.USER_SAVEUSER, {
+          name: '王立广',
+          age: 26
+        });
+      }
+    }, {
       key: "render",
       value: function render() {
-        return _react3.default.createElement(
-          _reactNative.View,
-          {
-            style: styles.container,
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 20
-            }
-          },
-          _react3.default.createElement(
-            _reactNative.Text,
-            {
-              style: styles.welcome,
-              __source: {
-                fileName: _jsxFileName,
-                lineNumber: 21
-              }
-            },
-            "Welcome to React Native!"
-          ),
-          _react3.default.createElement(
-            _reactNative.Text,
-            {
-              style: styles.instructions,
-              __source: {
-                fileName: _jsxFileName,
-                lineNumber: 24
-              }
-            },
-            "To get started, edit App.js"
-          ),
-          _react3.default.createElement(
-            _reactNative.Text,
-            {
-              style: styles.instructions,
-              __source: {
-                fileName: _jsxFileName,
-                lineNumber: 27
-              }
-            },
-            instructions
-          )
-        );
+        return _react3.default.createElement(_reactNative.View, {
+          style: styles.container,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 21
+          }
+        });
       }
     }]);
 
@@ -69766,22 +69742,213 @@ __d(function (global, _require, module, exports, _dependencyMap) {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#F5FCFF'
-    },
-    welcome: {
-      fontSize: 20,
-      textAlign: 'center',
-      margin: 10
-    },
-    instructions: {
-      textAlign: 'center',
-      color: '#333333',
-      marginBottom: 5
+      backgroundColor: 'orange'
     }
   });
 
-  exports.default = HomePage;
-},494,[118,130,12],"app/container/HomePage.js");
+  var mapStateToProps = function mapStateToProps(state) {
+    var loading = state.loading,
+        User = state.User;
+    console.log(state);
+    return {
+      loading: loading,
+      User: User
+    };
+  };
+
+  var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+      setUserInfo: function setUserInfo(type, payload) {
+        dispatch({
+          type: type,
+          payload: payload
+        });
+      }
+    };
+  };
+
+  exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(HomePage);
+},494,[118,130,667,12,686],"app/container/HomePage.js");
+__d(function (global, _require, module, exports, _dependencyMap) {
+  "use strict";
+
+  var _interopRequireDefault = _require(_dependencyMap[0], "@babel/runtime/helpers/interopRequireDefault");
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = void 0;
+
+  var _regenerator = _interopRequireDefault(_require(_dependencyMap[1], "@babel/runtime/regenerator"));
+
+  var _keys = _interopRequireDefault(_require(_dependencyMap[2], "@babel/runtime/core-js/object/keys"));
+
+  var _defineProperty2 = _interopRequireDefault(_require(_dependencyMap[3], "@babel/runtime/helpers/defineProperty"));
+
+  var _objectSpread6 = _interopRequireDefault(_require(_dependencyMap[4], "@babel/runtime/helpers/objectSpread"));
+
+  var SHOW = '@@DVA_LOADING/SHOW';
+  var HIDE = '@@DVA_LOADING/HIDE';
+  var NAMESPACE = 'loading';
+
+  function createLoading() {
+    var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var namespace = opts.namespace || NAMESPACE;
+    var _opts$only = opts.only,
+        only = _opts$only === void 0 ? [] : _opts$only,
+        _opts$except = opts.except,
+        except = _opts$except === void 0 ? [] : _opts$except;
+
+    if (only.length > 0 && except.length > 0) {
+      throw Error('It is ambiguous to configurate `only` and `except` items at the same time.');
+    }
+
+    var initialState = {
+      global: false,
+      models: {},
+      effects: {}
+    };
+    var extraReducers = (0, _defineProperty2.default)({}, namespace, function () {
+      var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+
+      var _ref = arguments.length > 1 ? arguments[1] : undefined,
+          type = _ref.type,
+          payload = _ref.payload;
+
+      var _ref2 = payload || {},
+          namespace = _ref2.namespace,
+          actionType = _ref2.actionType;
+
+      var ret;
+
+      switch (type) {
+        case SHOW:
+          ret = (0, _objectSpread6.default)({}, state, {
+            global: true,
+            models: (0, _objectSpread6.default)({}, state.models, (0, _defineProperty2.default)({}, namespace, true)),
+            effects: (0, _objectSpread6.default)({}, state.effects, (0, _defineProperty2.default)({}, actionType, true))
+          });
+          break;
+
+        case HIDE:
+          var effects = (0, _objectSpread6.default)({}, state.effects, (0, _defineProperty2.default)({}, actionType, false));
+          var models = (0, _objectSpread6.default)({}, state.models, (0, _defineProperty2.default)({}, namespace, (0, _keys.default)(effects).some(function (actionType) {
+            var _namespace = actionType.split('/')[0];
+            if (_namespace !== namespace) return false;
+            return effects[actionType];
+          })));
+          var global = (0, _keys.default)(models).some(function (namespace) {
+            return models[namespace];
+          });
+          ret = (0, _objectSpread6.default)({}, state, {
+            global: global,
+            models: models,
+            effects: effects
+          });
+          break;
+
+        default:
+          ret = state;
+          break;
+      }
+
+      return ret;
+    });
+
+    function onEffect(effect, _ref3, model, actionType) {
+      var put = _ref3.put;
+      var namespace = model.namespace;
+
+      if (only.length === 0 && except.length === 0 || only.length > 0 && only.indexOf(actionType) !== -1 || except.length > 0 && except.indexOf(actionType) === -1) {
+        return _regenerator.default.mark(function _callee() {
+          var _args = arguments;
+          return _regenerator.default.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _context.next = 2;
+                  return put({
+                    type: SHOW,
+                    payload: {
+                      namespace: namespace,
+                      actionType: actionType
+                    }
+                  });
+
+                case 2:
+                  _context.next = 4;
+                  return effect.apply(void 0, _args);
+
+                case 4:
+                  _context.next = 6;
+                  return put({
+                    type: HIDE,
+                    payload: {
+                      namespace: namespace,
+                      actionType: actionType
+                    }
+                  });
+
+                case 6:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee, this);
+        });
+      } else {
+        return effect;
+      }
+    }
+
+    return {
+      extraReducers: extraReducers,
+      onEffect: onEffect
+    };
+  }
+
+  var _default = createLoading;
+  exports.default = _default;
+},685,[527,637,561,576,564],"node_modules/dva-loading/lib/index.js");
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.USER_SAVEUSER = undefined;
+
+  var _UserModel = _require(_dependencyMap[0], "./UserModel");
+
+  var _UserModel2 = _interopRequireDefault(_UserModel);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  exports.default = registerModel = function registerModel(app) {
+    app.model(_UserModel2.default);
+  };
+
+  var USER_SAVEUSER = exports.USER_SAVEUSER = 'user/saveUser';
+},686,[687],"app/model/index.js");
+__d(function (global, _require, module, exports, _dependencyMap) {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+  var userModel = {};
+  userModel.namespace = 'user';
+  userModel.state = {
+    name: 'GG',
+    age: '18'
+  };
+  userModel.reducers = {
+    saveUser: function saveUser(state, _ref) {
+      var payload = _ref.payload;
+      return _extends({}, state, payload);
+    }
+  };
+  exports.default = userModel;
+},687,[],"app/model/UserModel.js");
 require(52);
 require(11);
 //# sourceMappingURL=index.map
