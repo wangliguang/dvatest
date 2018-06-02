@@ -22,9 +22,6 @@ userModel.effects = {
   *login ({ payload }, { put, call }) {
     try{
       let data = yield call(RequestUtil.request,true,'user/login','post',payload);
-      console.log('================================');
-      console.log(payload);
-      console.log(data);
     }catch(error){
       console.log(error);
     }

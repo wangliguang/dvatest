@@ -69969,27 +69969,25 @@ __d(function (global, _require, module, exports, _dependencyMap) {
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return call(_Request2.default.request, true, 'user/login', 'post', payload);
+              return _Request2.default.request(true, 'user/login', 'post', payload);
 
             case 3:
               data = _context.sent;
-              console.log('================================');
-              console.log(payload);
               console.log(data);
-              _context.next = 12;
+              _context.next = 10;
               break;
 
-            case 9:
-              _context.prev = 9;
+            case 7:
+              _context.prev = 7;
               _context.t0 = _context["catch"](0);
               console.log(_context.t0);
 
-            case 12:
+            case 10:
             case "end":
               return _context.stop();
           }
         }
-      }, login, this, [[0, 9]]);
+      }, login, this, [[0, 7]]);
     })
   };
   exports.default = userModel;
