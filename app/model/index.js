@@ -5,3 +5,4 @@ export default registerModel = (app) => {
 };
 
 export const USER_SAVEUSER = 'user/saveUser';
+export const USER_LOGIN = 'user/login';

@@ -14,6 +14,8 @@ class HomePage extends Component<Props> {
 
   componentDidMount() {
     this.props.setUserInfo(reducerType.USER_SAVEUSER, { name: '王立广', age: 26 });
+    this.props.login(reducerType.USER_LOGIN, { phone: '13121529304', pwd: '1234' });
+    
   }
 
   render() {
@@ -35,7 +37,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const { loading, User } = state;
-  console.log(state);
   return {
     loading,
     User,
@@ -44,10 +45,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   setUserInfo: (type, payload) => {
-    dispatch({
-      type,
-      payload,
-    });
+    dispatch({ type,payload });
+  },
+  login: (type, payload) => {
+    dispatch({ type, payload });
   }
 });
 

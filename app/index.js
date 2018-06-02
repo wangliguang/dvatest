@@ -22,12 +22,6 @@ import registerModel from './model';
 export default function () {
   const app = create({
     ...createLoading({ effects: true }),
-    onReducer: (reducer) => {
-      // 可以拦截发送的reducer
-      return (state, action) => {
-        return { ...action.payload };
-      }
-    },
   });
   registerModel(app);
   app.start();
