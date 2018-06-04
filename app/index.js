@@ -4,7 +4,7 @@ import { create } from 'dva-core';
 import { Provider } from 'react-redux';
 import createLoading from 'dva-loading';
 import registerModel from './model';
-
+import rootSaga from './watchAction';
 
 // 支持的hook
 // const hooks = [
@@ -26,6 +26,7 @@ export default function () {
   registerModel(app);
   app.start();
   const store = app._store;
+  store.runSaga(rootSaga);
   return (
     <Provider store={store}>
       <HomePage/>
