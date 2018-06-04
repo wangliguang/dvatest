@@ -43,55 +43,52 @@
 
 
 
-## saga的API介绍
+## saga的effects API介绍
 
-| API  | 介绍 |
-| ---- | ---- |
-| call |      |
-|      |      |
-|      |      |
-|      |      |
-|      |      |
+| API        | 介绍                                       |
+| ---------- | ------------------------------------------ |
+| put        | 类似于dispatch                             |
+| select     | 类似于getState                             |
+| call       | 返回一个pure object，方便进行模拟数据测试  |
+| take       | 当有下一个action发出，才会执行当前的action |
+| fork       | 暂时还不明白                               |
+| takeEvery  | 可以同时执行多个action                     |
+| takeLatest | 多个action同时发出，只会执行最后一个       |
 
 
+
+takeEvery  可以同时执行多个action  takeLatest  多个action同时发出，只会执行最后一个
 
 ## 在RN中集成dva
+
+```javascript
+export default function () {
+  const app = create({
+    ...createLoading({ effects: true }),
+  });
+  registerModel(app);
+  app.start();
+  const store = app._store;
+  store.runSaga(rootSaga);
+  return (
+    <Provider store={store}>
+      <HomePage/>
+    </Provider>
+  )
+}
+```
+
+
+
+## 示例
+
+- [dvaTest]()
 
 
 
 ## QA
 
 
-
-
-
-
-
-
-
-
-
-
-# effect的API
-
-- ### call: 
-
-  在正常写逻辑时，call可用可不用，但使用call时会帮我们返回一个对象，来标识后面的语句是做什么的，方便我们做函数的颗粒化测试
-
-- ### redux-saga中的action为什么使用yield呢，在项目中又没有调用过generater的next方法
-
-    我们在action中一般会做多个异步处理，比如有异步A和异步B，异步A在异步B之前条用，并且异步B要用到异步A最后获取到的数据。此时如果使用如下方式来调用：
-            
-      function* asyncOpertion() {      
-        let resultA = yield 异步A
-        yeild resultA + 1
-      }
-    
-    saga内部的机制，会先执行一次asyncOpertion().next()，等异步A执行完之后才会执行下一次asyncOpertion().next()，执行异步B
-
-- ### put
-
-  相当于dispatch
 
 ## 参考资料
 
