@@ -4,9 +4,9 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  Button
 } from 'react-native';
-
 import * as reducerType from '../model'
 
 type Props = {};
@@ -15,12 +15,14 @@ class HomePage extends Component<Props> {
   componentDidMount() {
     this.props.setUserInfo(reducerType.USER_SAVEUSER, { name: '王立广', age: 26 });
     this.props.login(reducerType.USER_LOGIN, { phone: '13121529304', pwd: '1234' });
-    
   }
 
   render() {
     return (
       <View style={styles.container}>
+        <Button onPress={() => {
+          this.props.login(reducerType.USER_LOGIN, { phone: '13121529304', pwd: '1234' });
+        }} title={'发送登录请求'}/>
       </View>
     );
   }

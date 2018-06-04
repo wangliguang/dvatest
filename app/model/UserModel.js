@@ -1,5 +1,7 @@
-const userModel = {};
+
 import RequestUtil from '../utils/Request';
+
+const userModel = {};
 
 userModel.namespace = 'user';
 
