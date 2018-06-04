@@ -53,7 +53,7 @@ eeffects API都会返回一个纯对象来描述当前的操作，会方便我�
 | select     | 类似于getState                                               |
 | call       | 发起异步操作（阻塞调用）                                     |
 | fork       | 发起异步操作（非阻塞调用）                                   |
-| take       | 执行一次，只会监听一次                                       |
+| take       | 执行一次，只会监听一次，并且会阻塞后面的调用                 |
 | takeEvery  | 执行一次,便会永久监听                                        |
 | takeLatest | 监听action,   多个action时，处理最后一次发起的异步请求，如果上次未结束则会被取消 |
 | cancel     | 取消一个还未返回的fork任务                                   |
