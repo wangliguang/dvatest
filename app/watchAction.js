@@ -1,8 +1,11 @@
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, put, takeEvery, select } from 'redux-saga/effects'
 
 function* wathActionAndLogger() {
   yield takeEvery('*', function* (action) {
-    console.log('Logger', action);
+    const state = yield select()
+    console.log('action', action);
+    console.log('state', state);
+
   });
 }
 
