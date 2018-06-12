@@ -1,13 +1,17 @@
+# RN中集成dva及dva在RN中的实际体验
+
+
+
 ## 知识储备
 
 | 知识点    | 需掌握的程度             |
 | --------- | ------------------------ |
-| generator | 了解*、yield和next的作用 |
 | redux     | 深入理解                 |
+| dva       | 基本了解                 |
 | thunk     | 深入理解                 |
 | saga      | 基本了解                 |
+| generator | 了解*、yield和next的作用 |
 | 单元测试  | 了解基本的单元测试即可   |
-| dva       | 基本了解                 |
 
 
 
@@ -19,6 +23,16 @@
 | 学习成本   | 文档详细     | 文档也很详细，除此之外提供有知识网络和中文参考资料,示例也多 |
 | saga的集成 | 较为复杂     | dva里是直接集成saga的                                       |
 
+## dva的API介绍
+
+| API                 | 介绍                                                         |
+| ------------------- | ------------------------------------------------------------ |
+| create(parm1,parm2) | dva初始化。有两个参数，并且都是对象。返回一个dva对象<br />第一个参数是指定hoock,可以对一些操作进行拦截处理(可以拦截的操作如下：onError/onStateChange/onAction/onHmr/onReducer/onEffect/extraReducers/extraEnhancers/_handleActions)，第二个参数暂时未知 |
+| app.model()         | 使用create创建出来的对象注册model(action和reducer的整合)     |
+| app.start()         | 启动dva，将model中的state转为store，只有执行start后, app._store才会被赋值。这个sotore跟redux中的store是一个概念 |
+| app._store          | 获取全局唯一的store,  只有执行过前面三个方法，store才有值    |
+
+
 
 
 ## thunk与saga的对比
@@ -29,18 +43,6 @@
 | 单元测试   | 因为有副作用对aciton无法做单元测试 | 因为无副作用可以对action直接进行单元测试   |
 | 异步可控性 | 异步流程不可控，并不可取消         | 异步流程可控制，并可取消                   |
 | 学习成本   | 低                                 | 比较高                                     |
-
-
-
-## dva的API介绍
-
-| API                 | 介绍                                                         |
-| ------------------- | ------------------------------------------------------------ |
-| create(parm1,parm2) | dva初始化。有两个参数，并且都是对象。返回一个dva对象<br />第一个参数是指定hoock,可以对一些操作进行拦截处理(可以拦截的操作如下：onError/onStateChange/onAction/onHmr/onReducer/onEffect/extraReducers/extraEnhancers/_handleActions)，第二个参数暂时未知 |
-| app.model()         | 使用create创建出来的对象注册model(action和reducer的整合)     |
-| app.start()         | 启动dva，将model中的state转为store，只有执行start后, app._store才会被赋值。这个sotore跟redux中的store是一个概念 |
-| app._store          | 获取全局唯一的store,  只有执行过前面三个方法，store才有值    |
-
 
 
 ## saga的effects API介绍
