@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "setup": "rm -rf node_modules && yarn install"
+    "setup": "rm -rf node_modules && yarn install",
+    "pack-ios": "python ./script/pack_ios.py"
   },
   "dependencies": {
     "dva-core": "^1.2.1",

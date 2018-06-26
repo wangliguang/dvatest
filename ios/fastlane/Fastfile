@@ -1,0 +1,36 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Description of what the lane does"
+  lane :test do
+    puts '开始打包'
+    gym(
+      scheme: 'dvatest',
+      output_name: 'ofoEngineIntl-alpha',
+      output_directory: './fastlane/build',
+      clear: true,
+      configuration: 'Debug',
+      export_method: 'enterprise',
+      export_optioms: {
+        provisioningProfiles: {
+          'com.ofo.test.ofoEngineIntl": "match InHouse com.ofo.test.ofoEngineIntl'
+        }
+      }
+    )
+  end
+end
